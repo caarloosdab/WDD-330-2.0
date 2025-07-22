@@ -4,5 +4,5 @@ import ProductList from './ProductList.mjs';
 const dataSource = new ProductData("tents");
 const element = document.querySelector('.product-list');
 
-const ProductList = new ProductList("tents", dataSource, element);
+const ProductsList = new ProductsList("tents", dataSource, element);
 ProductList.init();
