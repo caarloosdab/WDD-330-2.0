@@ -7,6 +7,12 @@ function renderCartItems() {
   // Clear the list before rendering
   cartList.innerHTML = '';
 
+  if (cartItems.length === 0) {
+    cartList.innerHTML = '<p>Your cart is empty.</p>';
+    document.querySelector("#cart-total").textContent = "Total: $0.00";
+    return;
+  }
+
   // Render each product
   cartItems.forEach((item) => {
     const li = document.createElement('li');
@@ -29,6 +35,7 @@ function renderCartItems() {
   });
 
   attachRemoveListeners(); // Attach the listeners to ✕
+  updateCartTotal(cartItems); //  update the total
 }
 
 function attachRemoveListeners() {
@@ -55,7 +62,18 @@ function removeItemFromCart(idToRemove) {
   }
 
   setLocalStorage('so-cart', cartItems);
-  renderCartItems();
+  renderCartItems(); // re-render after change
+}
+
+function updateCartTotal(cartItems) {
+  let total = 0;
+
+  cartItems.forEach(item => {
+    const quantity = item.Quantity || 1;
+    total += item.FinalPrice * quantity;
+  });
+
+  document.querySelector("#cart-total").textContent = `Total: $${total.toFixed(2)}`;
 }
 
 // Initial render
